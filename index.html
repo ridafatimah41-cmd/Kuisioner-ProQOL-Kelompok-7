@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruang Jeda Guru: Cek Kesejahteraan Emosimu</title>
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --bg-color: #F0F4F8;
+            --card-bg: #FFFFFF;
+            --text-main: #333333;
+            --text-muted: #666666;
+            --accent-green: #2ECC71;
+            --accent-yellow: #F1C40F;
+            --accent-red: #E74C3C;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .intro-text {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .question-card {
+            background: #F8FAFC;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 1px solid #E2E8F0;
+        }
+
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .option-label {
+            flex: 1;
+            text-align: center;
+            background: var(--card-bg);
+            padding: 10px 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid #E2E8F0;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+            min-width: 80px;
+        }
+
+        .option-label:hover {
+            border-color: var(--primary-color);
+            background: #EBF4FF;
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        input[type="radio"]:checked + .option-label {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 30px;
+        }
+
+        .btn-submit:hover {
+            background-color: #357ABD;
+        }
+
+        #result-section {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-title {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .result-desc {
+            font-size: 1.1em;
+            color: #444;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .options { flex-direction: column; }
+            .option-label { width: 100%; box-sizing: border-box; }
+            .container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Ruang Jeda Guru</h1>
+        <p class="intro-text">
+            Kuesioner singkat ini hadir untuk menemanimu mengenali tingkat kelelahan emosional saat ini. Tarik napas panjang, tidak ada jawaban yang benar atau salah di sini. Cukup pilih jawaban yang paling mewakili apa yang benar-benar kamu rasakan selama <strong>30 hari terakhir</strong>.
+        </p>
+
+        <form id="quiz-form">
+            <!-- Soal akan di-generate via JavaScript -->
+            <div id="questions-container"></div>
+            
+            <button type="button" class="btn-submit" onclick="calculateScore()">Lihat Hasilnya</button>
+        </form>
+
+        <div id="result-section">
+            <h2 class="result-title" id="res-title"></h2>
+            <p class="result-desc" id="res-desc"></p>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            "1. Saya merasa lelah secara emosional setelah selesai berinteraksi dengan anak didik atau orang tua murid di sekolah.",
+            "2. Saya merasa seolah-olah masalah, tantangan, atau trauma yang dialami anak didik ikut membebani pikiran saya meski saya sudah berada di rumah.",
+            "3. Belakangan ini, saya menyadari diri saya menjadi lebih sinis, mudah terpancing emosi, atau kurang sabar saat berada di kelas.",
+            "4. Saya mulai merasa ragu dan berpikir bahwa usaha, modul, atau metode yang saya lakukan di kelas tidak membawa perubahan yang berarti bagi anak-anak.",
+            "5. Saya merasa kehabisan energi untuk peduli atau merasa 'mati rasa' ketika anak didik sedang mengalami kesulitan atau tantangan emosional.",
+            "6. Saya sengaja menghindari obrolan dengan rekan sesama guru karena merasa tidak ada yang benar-benar paham dengan tekanan yang saya rasakan.",
+            "7. Saya merasa sangat kewalahan dengan tuntutan pekerjaan (mengajar, merancang kegiatan, hingga pelaporan administrasi seperti Dapodik/BOP) sampai saya tidak bisa menikmati waktu istirahat.",
+            "8. Saya kehilangan minat, energi, atau semangat untuk melakukan hobi atau aktivitas yang biasanya sangat saya nikmati di luar jam sekolah."
+        ];
+
+        const optionsText = ["Tidak Pernah", "Jarang", "Kadang-kadang", "Sering", "Sangat Sering"];
+        const container = document.getElementById('questions-container');
+
+        // Generate HTML untuk setiap pertanyaan
+        questions.forEach((q, index) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question-card';
+            
+            const qText = document.createElement('div');
+            qText.className = 'question-text';
+            qText.innerText = q;
+            qDiv.appendChild(qText);
+
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options';
+
+            for (let i = 1; i <= 5; i++) {
+                const label = document.createElement('label');
+                
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = `q${index}`;
+                input.value = i;
+                
+                const span = document.createElement('span');
+                span.className = 'option-label';
+                span.innerText = optionsText[i-1];
+
+                label.appendChild(input);
+                label.appendChild(span);
+                optionsDiv.appendChild(label);
+            }
+
+            qDiv.appendChild(optionsDiv);
+            container.appendChild(qDiv);
+        });
+
+        function calculateScore() {
+            let totalScore = 0;
+            let answeredAll = true;
+
+            for (let i = 0; i < questions.length; i++) {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                if (selected) {
+                    totalScore += parseInt(selected.value);
+                } else {
+                    answeredAll = false;
+                    break;
+                }
+            }
+
+            if (!answeredAll) {
+                alert("Tolong bantu kami dengan menjawab semua pertanyaan ya, agar hasilnya lebih akurat untukmu.");
+                return;
+            }
+
+            displayResult(totalScore);
+        }
+
+        function displayResult(score) {
+            const resSection = document.getElementById('result-section');
+            const resTitle = document.getElementById('res-title');
+            const resDesc = document.getElementById('res-desc');
+
+            resSection.style.display = 'block';
+            
+            // Scroll otomatis ke hasil
+            resSection.scrollIntoView({ behavior: 'smooth' });
+
+            if (score >= 8 && score <= 15) {
+                resSection.style.backgroundColor = '#E8F8F5'; // Soft green
+                resSection.style.border = '2px solid var(--accent-green)';
+                resTitle.style.color = '#1E8449';
+                resTitle.innerText = "🌿 Tangki Empati Penuh (Risiko Rendah)";
+                resDesc.innerHTML = "Wah, luar biasa! Kamu mengelola kesejahteraan emosionalmu dengan sangat baik. Terus pertahankan <em>support system</em> dan batasan sehat yang sudah kamu bangun. Kamu sudah dan selalu siap menjadi ruang aman bagi anak-anak didikmu. Jangan lupa apresiasi dirimu sendiri hari ini!";
+            } 
+            else if (score >= 16 && score <= 28) {
+                resSection.style.backgroundColor = '#FEF9E7'; // Soft yellow
+                resSection.style.border = '2px solid var(--accent-yellow)';
+                resTitle.style.color = '#B7950B';
+                resTitle.innerText = "🌤️ Lampu Kuning (Risiko Sedang)";
+                resDesc.innerHTML = "Halo, terima kasih sudah berani jujur pada dirimu sendiri. Kamu mulai merasakan percikan <em>compassion fatigue</em>. Tuntutan mengajar dan administrasi perlahan mulai menggerus energimu. Ini adalah waktu yang tepat untuk mulai mempraktikkan <strong>Cognitive Crafting</strong> (menata ulang ekspektasimu) dan mengatur ulang ritme istirahatmu sebelum berujung pada <em>burnout</em>. Kamu berhak beristirahat sejenak.";
+            } 
+            else if (score >= 29 && score <= 40) {
+                resSection.style.backgroundColor = '#FDEDEC'; // Soft red
+                resSection.style.border = '2px solid var(--accent-red)';
+                resTitle.style.color = '#C0392B';
+                resTitle.innerText = "❤️ Tangki Kosong (Risiko Tinggi)";
+                resDesc.innerHTML = "Peluk hangat untukmu. Alarm bahaya sedang berbunyi keras. Sangat wajar jika kamu merasa kehabisan napas saat kamu sudah memberikan terlalu banyak cinta dan tenaga untuk orang lain. Tolong prioritaskan dirimu sekarang. Ambil jeda yang kamu butuhkan, terapkan batasan yang sangat ketat setelah jam kerja, dan pertimbangkan untuk berbicara dari hati ke hati dengan rekan yang kamu percaya atau tenaga profesional. Kamu sangat berharga, melampaui peranmu sebagai seorang guru.";
+            }
+        }
+    </script>
+</body>
+</html>
