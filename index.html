@@ -5,37 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ruang Jeda Guru: Cek Kesejahteraan Emosimu</title>
     <style>
-        /* Tema Warna Pastel */
+        /* TEMA WARNA CERAH */
         :root {
-            --bg-pastel: #FDF6F5; /* Soft peach/pink background */
+            --primary: #FF6B6B;      /* Koral Cerah (Enerjik & Hangat) */
+            --secondary: #4EA8DE;    /* Biru Langit (Menenangkan) */
+            --accent: #FFD166;       /* Kuning Cerah (Optimis) */
+            --bg-color: #FFFDF7;     /* Latar belakang krem sangat muda */
             --card-bg: #FFFFFF;
-            --primary-pastel: #A2C4C9; /* Calming dusty blue/teal */
-            --primary-hover: #8EAEB3;
-            --text-main: #4A4A4A; /* Soft dark grey */
-            --text-muted: #7A7A7A;
-            --option-bg: #F4F7F6;
-            --option-border: #DCE5E7;
-            --option-hover: #E8F0F1;
-            
-            /* Pastel Result Colors */
-            --result-green-bg: #EAF7E3;
-            --result-green-border: #B5EAD7;
-            --result-green-text: #5C8D73;
-            
-            --result-yellow-bg: #FFF7E6;
-            --result-yellow-border: #FFE5B4;
-            --result-yellow-text: #B38645;
-            
-            --result-red-bg: #FCE8E8;
-            --result-red-border: #FFB7B2;
-            --result-red-text: #C46C6C;
+            --text-main: #2B2D42;
+            --text-muted: #8D99AE;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-pastel);
+            font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
             color: var(--text-main);
-            line-height: 1.6;
             margin: 0;
             padding: 20px;
             display: flex;
@@ -45,74 +29,124 @@
         }
 
         .container {
-            max-width: 700px;
+            max-width: 600px;
             width: 100%;
             background: var(--card-bg);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(162, 196, 201, 0.15);
+            padding: 40px 30px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.15);
             position: relative;
             overflow: hidden;
         }
 
-        /* Hilangkan elemen yang tidak aktif */
+        /* Navigasi Halaman */
         .page {
             display: none;
-            animation: fadeIn 0.4s ease-in-out;
+            animation: slideIn 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
         }
 
         .page.active {
             display: block;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateX(10px); }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(30px); }
             to { opacity: 1; transform: translateX(0); }
         }
 
-        /* Typography */
-        h1, h2 {
-            color: var(--primary-pastel);
+        /* Tipografi & Elemen */
+        h1 {
+            color: var(--primary);
+            font-size: 2.2em;
             text-align: center;
             margin-bottom: 15px;
-            font-size: 2.2em;
+            line-height: 1.2;
         }
 
-        .intro-text, .question-text {
+        p {
+            font-size: 1.1em;
+            line-height: 1.7;
             text-align: center;
             color: var(--text-main);
-            font-size: 1.15em;
-            margin-bottom: 30px;
+        }
+
+        .question-header {
+            color: var(--text-muted);
+            font-size: 0.9em;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 1.3em;
+            font-weight: 700;
+            text-align: left;
+            margin-bottom: 25px;
+            color: var(--text-main);
+            line-height: 1.5;
+        }
+
+        /* Tombol */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 30px;
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn:hover {
+            background-color: #FF5252;
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            background-color: #E2E8F0;
+            color: #94A3B8;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            box-shadow: 0 6px 20px rgba(78, 168, 222, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background-color: #3B82F6;
         }
 
         /* Progress Bar */
-        .progress-container {
-            display: none; /* Disembunyikan di halaman awal */
+        #progress-container {
+            display: none;
             width: 100%;
-            background-color: var(--option-border);
+            height: 10px;
+            background-color: #F1F5F9;
             border-radius: 10px;
             margin-bottom: 30px;
-            height: 8px;
             overflow: hidden;
         }
 
-        .progress-bar {
+        .progress {
             height: 100%;
-            background-color: var(--primary-pastel);
+            background-color: var(--accent);
             width: 0%;
-            transition: width 0.3s ease;
+            transition: width 0.4s ease;
+            border-radius: 10px;
         }
 
-        .progress-text {
-            text-align: center;
-            font-size: 0.9em;
-            color: var(--text-muted);
-            margin-top: -20px;
-            margin-bottom: 20px;
-            display: none;
-        }
-
-        /* Options */
+        /* Pilihan Jawaban */
         .options {
             display: flex;
             flex-direction: column;
@@ -120,20 +154,20 @@
         }
 
         .option-label {
-            display: block;
-            text-align: left;
-            background: var(--option-bg);
-            padding: 15px 20px;
-            border-radius: 12px;
+            padding: 16px 20px;
+            border: 2px solid #E2E8F0;
+            border-radius: 14px;
             cursor: pointer;
-            border: 2px solid var(--option-border);
             transition: all 0.2s ease;
+            font-weight: 600;
+            text-align: left;
+            background: #FAFAFA;
             font-size: 1.05em;
         }
 
         .option-label:hover {
-            background: var(--option-hover);
-            transform: translateY(-2px);
+            border-color: var(--secondary);
+            background: #F0F9FF;
         }
 
         input[type="radio"] {
@@ -141,116 +175,69 @@
         }
 
         input[type="radio"]:checked + .option-label {
-            background: var(--primary-pastel);
+            background-color: var(--secondary);
             color: white;
-            border-color: var(--primary-pastel);
+            border-color: var(--secondary);
+            box-shadow: 0 4px 15px rgba(78, 168, 222, 0.2);
         }
 
-        /* Buttons */
-        .nav-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-            gap: 15px;
-        }
-
-        button {
-            flex: 1;
-            padding: 15px;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-primary {
-            background-color: var(--primary-pastel);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-hover);
-        }
-
-        .btn-secondary {
-            background-color: #F0F0F0;
-            color: var(--text-muted);
-        }
-
-        .btn-secondary:hover {
-            background-color: #E0E0E0;
-        }
-
-        /* Result Section */
-        .result-box {
-            padding: 30px;
-            border-radius: 16px;
+        /* Kartu Hasil */
+        .result-card {
             text-align: center;
-            margin-top: 20px;
         }
 
         .result-score {
-            font-size: 3em;
-            font-weight: bold;
-            margin-bottom: 10px;
+            font-size: 4em;
+            font-weight: 900;
+            color: var(--primary);
+            margin: 10px 0;
+            text-shadow: 2px 2px 0px var(--accent);
         }
 
         .result-title {
-            font-size: 1.5em;
+            font-size: 1.6em;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
-        .result-desc {
-            font-size: 1.1em;
-            color: var(--text-main);
-        }
-
-        @media (max-width: 600px) {
-            .container { padding: 25px; }
-            .nav-buttons { flex-direction: column-reverse; }
+        /* Responsif */
+        @media (max-width: 480px) {
+            .container { padding: 30px 20px; }
+            h1 { font-size: 1.8em; }
+            .question-text { font-size: 1.1em; }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- Progress Bar (Hidden on Start and Result) -->
-        <div class="progress-container" id="progress-container">
-            <div class="progress-bar" id="progress-bar"></div>
+        <!-- Progress Bar -->
+        <div id="progress-container">
+            <div class="progress" id="progress"></div>
         </div>
-        <div class="progress-text" id="progress-text">Pertanyaan 1 dari 8</div>
-
-        <!-- Page 1: Hook & Start -->
-        <div id="page-start" class="page active">
-            <h1>Ruang Jeda Guru</h1>
-            <p class="intro-text">
-                Lelah menjadi guru yang "terlalu peduli"? Pernahkah kamu merasa energi emosionalmu terkuras habis setelah seharian mendampingi anak-anak di kelas? <br><br>
-                Kamu tidak sendirian. Kuesioner singkat ini hadir untuk menemanimu mengenali tingkat kelelahan emosional (<em>Compassion Fatigue</em>) yang mungkin sedang kamu alami.
-                <br><br>
-                Tarik napas panjang, mari kita mulai perjalanan mengenali diri sendiri. Jawablah sesuai dengan apa yang paling menggambarkan perasaanmu dalam <strong>30 hari terakhir</strong>.
-            </p>
-            <button class="btn-primary" onclick="startQuiz()">Mulai Sekarang</button>
+        
+        <!-- PAGE 1: JUDUL & HOOK -->
+        <div id="page-intro" class="page active">
+            <h1>Ruang Jeda Guru 🌻</h1>
+            <p style="font-size: 1.2em; font-weight: bold; color: var(--secondary);">Lelah menjadi guru yang "terlalu peduli"?</p>
+            <p>Pernahkah kamu merasa energi emosionalmu terkuras habis setelah seharian mendampingi anak-anak di kelas? Kamu tidak sendirian.</p>
+            <p>Yuk, kenali kondisi kesejahteraan emosionalmu sebelum berdampak pada anak didik. Tarik napas panjang, tidak ada jawaban yang salah di sini.</p>
+            <button class="btn" onclick="startQuiz()">Mulai Refleksi Diri</button>
         </div>
 
-        <!-- Wadah untuk Pertanyaan (Di-generate via JS) -->
-        <div id="questions-wrapper"></div>
+        <!-- Wadah untuk Halaman Pertanyaan (Di-generate via JS) -->
+        <div id="quiz-pages"></div>
 
-        <!-- Final Page: Result -->
+        <!-- PAGE TERAKHIR: HASIL & POIN -->
         <div id="page-result" class="page">
-            <h1>Hasil Evaluasi Emosionalmu</h1>
-            <div id="result-content" class="result-box">
-                <div class="result-score" id="res-score"></div>
-                <div class="result-title" id="res-title"></div>
-                <div class="result-desc" id="res-desc"></div>
-            </div>
-            <div class="nav-buttons">
-                <button class="btn-secondary" onclick="location.reload()">Ulangi Kuesioner</button>
+            <div class="result-card">
+                <p style="text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); font-size: 0.9em; margin-bottom: 0;">Total Poin Kamu</p>
+                <div class="result-score" id="result-score">0</div>
+                <h2 class="result-title" id="result-title"></h2>
+                <p id="result-desc" style="margin-bottom: 30px;"></p>
+                <button class="btn btn-secondary" onclick="location.reload()">Ulangi Kuis</button>
             </div>
         </div>
-
     </div>
 
     <script>
@@ -261,153 +248,127 @@
             "Saya mulai merasa ragu dan berpikir bahwa usaha, modul, atau metode yang saya lakukan di kelas tidak membawa perubahan yang berarti bagi anak-anak.",
             "Saya merasa kehabisan energi untuk peduli atau merasa 'mati rasa' ketika anak didik sedang mengalami kesulitan atau tantangan emosional.",
             "Saya sengaja menghindari obrolan dengan rekan sesama guru karena merasa tidak ada yang benar-benar paham dengan tekanan yang saya rasakan.",
-            "Saya merasa sangat kewalahan dengan tuntutan pekerjaan (mengajar, merancang kegiatan, administrasi) sampai saya tidak bisa menikmati waktu istirahat.",
+            "Saya merasa sangat kewalahan dengan tuntutan pekerjaan (mengajar, merancang kegiatan, hingga pelaporan administrasi) sampai saya tidak bisa menikmati waktu istirahat.",
             "Saya kehilangan minat, energi, atau semangat untuk melakukan hobi atau aktivitas yang biasanya sangat saya nikmati di luar jam sekolah."
         ];
-
-        const options = [
-            { text: "Tidak Pernah", value: 1 },
-            { text: "Jarang", value: 2 },
-            { text: "Kadang-kadang", value: 3 },
-            { text: "Sering", value: 4 },
-            { text: "Sangat Sering", value: 5 }
+        
+        const optionsText = [
+            { text: "1 - Tidak Pernah", value: 1 },
+            { text: "2 - Jarang", value: 2 },
+            { text: "3 - Kadang-kadang", value: 3 },
+            { text: "4 - Sering", value: 4 },
+            { text: "5 - Sangat Sering", value: 5 }
         ];
 
-        let currentPage = 0; // 0 = start, 1-8 = questions, 9 = result
-        const totalQuestions = questions.length;
-        let answers = new Array(totalQuestions).fill(0);
+        let currentStep = -1; // -1 = Halaman Intro
+        let answers = [];
 
-        // Inisialisasi Halaman Pertanyaan
+        // Fungsi mencetak halaman pertanyaan ke dalam HTML
         function renderQuestions() {
-            const wrapper = document.getElementById('questions-wrapper');
-            
+            const container = document.getElementById('quiz-pages');
             questions.forEach((q, index) => {
-                const qNum = index + 1;
                 const pageDiv = document.createElement('div');
-                pageDiv.id = `page-q${qNum}`;
                 pageDiv.className = 'page';
-
-                let html = `<p class="question-text">${q}</p><div class="options">`;
+                pageDiv.id = `page-${index}`;
                 
-                options.forEach((opt, optIndex) => {
+                let html = `<div class="question-header">Pertanyaan ${index + 1} / ${questions.length}</div>`;
+                html += `<div class="question-text">${q}</div>`;
+                html += `<div class="options">`;
+                
+                optionsText.forEach((opt) => {
                     html += `
                         <label>
-                            <input type="radio" name="q${qNum}" value="${opt.value}" onchange="enableNext(${qNum})">
-                            <span class="option-label">${opt.text}</span>
+                            <input type="radio" name="q${index}" value="${opt.value}" onchange="enableNextBtn(${index})">
+                            <div class="option-label">${opt.text}</div>
                         </label>
                     `;
                 });
-
-                html += `</div>
-                <div class="nav-buttons">
-                    <button class="btn-secondary" onclick="prevPage(${qNum})">Kembali</button>
-                    <button class="btn-primary" id="btn-next-${qNum}" disabled onclick="nextPage(${qNum})">
-                        ${qNum === totalQuestions ? 'Lihat Hasilnya' : 'Selanjutnya'}
-                    </button>
-                </div>`;
-
+                
+                html += `</div>`;
+                // Tombol default disabled, akan aktif setelah radio button dipilih
+                html += `<button class="btn btn-secondary" id="btn-next-${index}" disabled onclick="nextQuestion()">Selanjutnya</button>`;
+                
                 pageDiv.innerHTML = html;
-                wrapper.appendChild(pageDiv);
+                container.appendChild(pageDiv);
             });
         }
 
+        // Mengaktifkan tombol 'Selanjutnya' ketika pengguna memilih jawaban
+        function enableNextBtn(index) {
+            document.getElementById(`btn-next-${index}`).disabled = false;
+        }
+
+        // Transisi dari Intro ke Kuis
         function startQuiz() {
-            document.getElementById('page-start').classList.remove('active');
+            document.getElementById('page-intro').classList.remove('active');
             document.getElementById('progress-container').style.display = 'block';
-            document.getElementById('progress-text').style.display = 'block';
-            showPage(1);
+            currentStep = 0;
+            showPage();
         }
 
-        function showPage(pageNum) {
-            // Sembunyikan semua page
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        // Logika menampilkan halaman berdasarkan currentStep
+        function showPage() {
+            // Sembunyikan semua halaman kuis
+            document.querySelectorAll('#quiz-pages .page').forEach(p => p.classList.remove('active'));
             
-            // Tampilkan page yang dituju
-            if (pageNum > 0 && pageNum <= totalQuestions) {
-                document.getElementById(`page-q${pageNum}`).classList.add('active');
-                updateProgress(pageNum);
-            } else if (pageNum > totalQuestions) {
-                calculateAndShowResult();
-            }
-        }
-
-        function enableNext(qNum) {
-            document.getElementById(`btn-next-${qNum}`).disabled = false;
-        }
-
-        function prevPage(qNum) {
-            if (qNum === 1) {
-                // Kembali ke start
-                document.getElementById(`page-q1`).classList.remove('active');
-                document.getElementById('page-start').classList.add('active');
-                document.getElementById('progress-container').style.display = 'none';
-                document.getElementById('progress-text').style.display = 'none';
+            if (currentStep < questions.length) {
+                // Tampilkan halaman pertanyaan saat ini
+                document.getElementById(`page-${currentStep}`).classList.add('active');
+                updateProgress();
             } else {
-                showPage(qNum - 1);
+                // Kuis selesai, hitung hasil
+                showResult();
             }
         }
 
-        function nextPage(qNum) {
-            // Simpan jawaban
-            const selected = document.querySelector(`input[name="q${qNum}"]:checked`);
+        // Memperbarui Progress Bar
+        function updateProgress() {
+            const percentage = (currentStep / questions.length) * 100;
+            document.getElementById('progress').style.width = percentage + '%';
+        }
+
+        // Pindah ke pertanyaan berikutnya
+        function nextQuestion() {
+            const selected = document.querySelector(`input[name="q${currentStep}"]:checked`);
             if (selected) {
-                answers[qNum - 1] = parseInt(selected.value);
-                showPage(qNum + 1);
+                answers[currentStep] = parseInt(selected.value);
+                currentStep++;
+                showPage();
             }
         }
 
-        function updateProgress(qNum) {
-            const progress = (qNum / totalQuestions) * 100;
-            document.getElementById('progress-bar').style.width = `${progress}%`;
-            document.getElementById('progress-text').innerText = `Pertanyaan ${qNum} dari ${totalQuestions}`;
-        }
-
-        function calculateAndShowResult() {
-            // Sembunyikan progress bar
+        // Menghitung dan menampilkan hasil di halaman akhir
+        function showResult() {
             document.getElementById('progress-container').style.display = 'none';
-            document.getElementById('progress-text').style.display = 'none';
-
-            // Hitung total
-            const totalScore = answers.reduce((a, b) => a + b, 0);
-
-            // Tampilkan halaman hasil
             document.getElementById('page-result').classList.add('active');
             
-            const resBox = document.getElementById('result-content');
-            const resScore = document.getElementById('res-score');
-            const resTitle = document.getElementById('res-title');
-            const resDesc = document.getElementById('res-desc');
-
-            resScore.innerText = `Skor Kamu: ${totalScore}`;
-
-            if (totalScore >= 8 && totalScore <= 15) {
-                resBox.style.backgroundColor = 'var(--result-green-bg)';
-                resBox.style.border = '2px solid var(--result-green-border)';
-                resScore.style.color = 'var(--result-green-text)';
-                resTitle.style.color = 'var(--result-green-text)';
-                resTitle.innerText = "🌿 Tangki Empati Penuh (Risiko Rendah)";
-                resDesc.innerHTML = "Wah, luar biasa! Kamu mengelola kesejahteraan emosionalmu dengan sangat baik. Terus pertahankan <em>support system</em> dan batasan sehat yang sudah kamu bangun. Jangan lupa apresiasi dirimu sendiri hari ini!";
-            } 
-            else if (totalScore >= 16 && totalScore <= 28) {
-                resBox.style.backgroundColor = 'var(--result-yellow-bg)';
-                resBox.style.border = '2px solid var(--result-yellow-border)';
-                resScore.style.color = 'var(--result-yellow-text)';
-                resTitle.style.color = 'var(--result-yellow-text)';
-                resTitle.innerText = "🌤️ Lampu Kuning (Risiko Sedang)";
-                resDesc.innerHTML = "Terima kasih sudah berani jujur pada dirimu sendiri. Kamu mulai merasakan percikan <em>compassion fatigue</em>. Tuntutan mengajar perlahan mulai menggerus energimu. Ini waktu yang tepat untuk mulai mengatur ulang ritme istirahatmu. Ingat, kamu berhak beristirahat sejenak tanpa merasa bersalah.";
-            } 
-            else if (totalScore >= 29 && totalScore <= 40) {
-                resBox.style.backgroundColor = 'var(--result-red-bg)';
-                resBox.style.border = '2px solid var(--result-red-border)';
-                resScore.style.color = 'var(--result-red-text)';
-                resTitle.style.color = 'var(--result-red-text)';
-                resTitle.innerText = "❤️ Tangki Kosong (Risiko Tinggi)";
-                resDesc.innerHTML = "Peluk hangat untukmu. Alarm bahayamu sedang berbunyi. Sangat wajar merasa kehabisan napas saat kamu sudah memberikan terlalu banyak cinta untuk orang lain. Tolong prioritaskan dirimu sekarang. Ambil jeda, terapkan batasan tegas, dan jangan ragu berdiskusi dengan rekan tepercaya atau profesional. Kamu berharga melampaui peranmu sebagai pendidik.";
+            const totalScore = answers.reduce((a, b) => a + b, 0);
+            
+            // Animasi penghitung angka (opsional agar interaktif)
+            let scoreDisplay = document.getElementById('result-score');
+            scoreDisplay.innerText = totalScore;
+            
+            const titleEl = document.getElementById('result-title');
+            const descEl = document.getElementById('result-desc');
+            const resultCard = document.querySelector('.result-card');
+            
+            if (totalScore <= 15) {
+                titleEl.style.color = '#2ECC71'; 
+                titleEl.innerText = "🌿 Tangki Empati Penuh (Risiko Rendah)";
+                descEl.innerHTML = "Wah, luar biasa! Kamu mengelola kesejahteraan emosionalmu dengan sangat baik. Terus pertahankan <em>support system</em> dan batasan sehat yang sudah kamu bangun. Kamu sudah siap dan akan terus menjadi ruang aman bagi anak-anak didikmu. Jangan lupa apresiasi dirimu sendiri hari ini!";
+            } else if (totalScore <= 28) {
+                titleEl.style.color = '#F39C12'; 
+                titleEl.innerText = "🌤️ Lampu Kuning (Risiko Sedang)";
+                descEl.innerHTML = "Halo, terima kasih sudah berani jujur pada dirimu sendiri. Kamu mulai merasakan percikan <em>compassion fatigue</em>. Tuntutan mengajar perlahan mulai menggerus energimu. Ini adalah waktu yang tepat untuk mengatur ulang ritme istirahatmu sebelum berujung pada <em>burnout</em>. Ingat, kamu berhak beristirahat sejenak.";
+            } else {
+                titleEl.style.color = '#E74C3C'; 
+                titleEl.innerText = "❤️ Tangki Kosong (Risiko Tinggi)";
+                descEl.innerHTML = "Peluk hangat untukmu. Alarm bahaya sedang berbunyi keras. Sangat wajar jika kamu merasa kehabisan napas saat kamu sudah memberikan terlalu banyak cinta dan tenaga untuk orang lain. Tolong prioritaskan dirimu sekarang. Ambil jeda yang kamu butuhkan, terapkan batasan yang ketat, dan pertimbangkan untuk berbicara dengan rekan tepercaya atau tenaga profesional.";
             }
         }
 
-        // Render pertanyaan saat halaman dimuat
-        window.onload = renderQuestions;
+        // Jalankan fungsi pembuatan soal saat halaman dimuat
+        renderQuestions();
     </script>
 </body>
 </html>
