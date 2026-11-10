@@ -7,10 +7,10 @@
     <style>
         /* TEMA WARNA CERAH */
         :root {
-            --primary: #FF6B6B;      /* Koral Cerah (Enerjik & Hangat) */
-            --secondary: #4EA8DE;    /* Biru Langit (Menenangkan) */
-            --accent: #FFD166;       /* Kuning Cerah (Optimis) */
-            --bg-color: #FFFDF7;     /* Latar belakang krem sangat muda */
+            --primary: #FF6B6B;      
+            --secondary: #4EA8DE;    
+            --accent: #FFD166;       
+            --bg-color: #FFFDF7;     
             --card-bg: #FFFFFF;
             --text-main: #2B2D42;
             --text-muted: #8D99AE;
@@ -29,7 +29,7 @@
         }
 
         .container {
-            max-width: 600px;
+            max-width: 700px;
             width: 100%;
             background: var(--card-bg);
             padding: 40px 30px;
@@ -220,8 +220,7 @@
         <div id="page-intro" class="page active">
             <h1>Ruang Jeda Guru 🌻</h1>
             <p style="font-size: 1.2em; font-weight: bold; color: var(--secondary);">Lelah menjadi guru yang "terlalu peduli"?</p>
-            <p>Pernahkah kamu merasa energi emosionalmu terkuras habis setelah seharian mendampingi anak-anak di kelas? Kamu tidak sendirian.</p>
-            <p>Yuk, kenali kondisi kesejahteraan emosionalmu sebelum berdampak pada anak didik. Tarik napas panjang, tidak ada jawaban yang salah di sini.</p>
+            <p>Kuesioner ini diadaptasi dari skala <strong>ProQOL 5.0 (Professional Quality of Life)</strong>. Jawablah 30 pertanyaan berikut berdasarkan apa yang kamu rasakan sebagai pendidik dalam 30 hari terakhir.</p>
             <button class="btn" onclick="startQuiz()">Mulai Refleksi Diri</button>
         </div>
 
@@ -242,14 +241,36 @@
 
     <script>
         const questions = [
-            "Saya merasa lelah secara emosional setelah selesai berinteraksi dengan anak didik atau orang tua murid di sekolah.",
-            "Saya merasa seolah-olah masalah, tantangan, atau trauma yang dialami anak didik ikut membebani pikiran saya meski saya sudah berada di rumah.",
-            "Belakangan ini, saya menyadari diri saya menjadi lebih sinis, mudah terpancing emosi, atau kurang sabar saat berada di kelas.",
-            "Saya mulai merasa ragu dan berpikir bahwa usaha, modul, atau metode yang saya lakukan di kelas tidak membawa perubahan yang berarti bagi anak-anak.",
-            "Saya merasa kehabisan energi untuk peduli atau merasa 'mati rasa' ketika anak didik sedang mengalami kesulitan atau tantangan emosional.",
-            "Saya sengaja menghindari obrolan dengan rekan sesama guru karena merasa tidak ada yang benar-benar paham dengan tekanan yang saya rasakan.",
-            "Saya merasa sangat kewalahan dengan tuntutan pekerjaan (mengajar, merancang kegiatan, hingga pelaporan administrasi) sampai saya tidak bisa menikmati waktu istirahat.",
-            "Saya kehilangan minat, energi, atau semangat untuk melakukan hobi atau aktivitas yang biasanya sangat saya nikmati di luar jam sekolah."
+            "1. Saya merasa bahagia.",
+            "2. Saya terus memikirkan lebih dari satu orang/siswa yang saya dampingi.",
+            "3. Saya mendapat kepuasan karena bisa mendampingi siswa.",
+            "4. Saya merasa terhubung dengan orang lain.",
+            "5. Saya mudah melompat atau terkejut oleh suara yang tidak terduga.",
+            "6. Saya merasa bersemangat setelah bekerja dengan siswa yang saya dampingi.",
+            "7. Saya merasa sulit memisahkan kehidupan pribadi dari kehidupan saya sebagai seorang guru.",
+            "8. Saya kurang produktif di tempat kerja karena kurang tidur memikirkan pengalaman traumatis dari siswa yang saya dampingi.",
+            "9. Saya pikir saya mungkin telah terpengaruh oleh stres traumatis dari siswa yang saya dampingi.",
+            "10. Saya merasa terjebak oleh pekerjaan saya sebagai guru.",
+            "11. Karena pekerjaan saya, saya merasa 'gelisah/tegang' tentang berbagai hal.",
+            "12. Saya menyukai pekerjaan saya sebagai guru.",
+            "13. Saya merasa depresi karena pengalaman traumatis dari orang/siswa yang saya dampingi.",
+            "14. Saya merasa seolah-olah saya mengalami sendiri trauma dari seseorang yang telah saya dampingi.",
+            "15. Saya memiliki keyakinan yang menguatkan saya.",
+            "16. Saya senang dengan kemampuan saya dalam mengikuti teknik dan protokol pengajaran/pendampingan.",
+            "17. Saya adalah sosok yang selalu saya inginkan.",
+            "18. Pekerjaan saya membuat saya merasa puas.",
+            "19. Saya merasa sangat lelah (habis tenaga) karena pekerjaan saya sebagai guru.",
+            "20. Saya memiliki pikiran dan perasaan yang membahagiakan tentang siswa saya dan bagaimana saya bisa membantu mereka.",
+            "21. Saya merasa kewalahan karena beban kerja saya tampaknya tidak ada habisnya.",
+            "22. Saya percaya saya bisa membuat perubahan melalui pekerjaan saya.",
+            "23. Saya menghindari aktivitas atau situasi tertentu karena mengingatkan saya pada pengalaman menakutkan dari siswa yang saya dampingi.",
+            "24. Saya bangga dengan apa yang bisa saya lakukan untuk mendampingi siswa.",
+            "25. Sebagai akibat dari pekerjaan saya, saya memiliki pikiran-pikiran menakutkan yang mengganggu.",
+            "26. Saya merasa 'terhambat/terbebani' oleh sistem.",
+            "27. Saya memiliki pemikiran bahwa saya 'sukses' sebagai guru.",
+            "28. Saya tidak bisa mengingat bagian-bagian penting dari pekerjaan saya dengan korban trauma.",
+            "29. Saya adalah orang yang sangat peduli.",
+            "30. Saya senang karena telah memilih untuk melakukan pekerjaan ini."
         ];
         
         const optionsText = [
@@ -260,10 +281,9 @@
             { text: "5 - Sangat Sering", value: 5 }
         ];
 
-        let currentStep = -1; // -1 = Halaman Intro
+        let currentStep = -1; 
         let answers = [];
 
-        // Fungsi mencetak halaman pertanyaan ke dalam HTML
         function renderQuestions() {
             const container = document.getElementById('quiz-pages');
             questions.forEach((q, index) => {
@@ -285,7 +305,6 @@
                 });
                 
                 html += `</div>`;
-                // Tombol default disabled, akan aktif setelah radio button dipilih
                 html += `<button class="btn btn-secondary" id="btn-next-${index}" disabled onclick="nextQuestion()">Selanjutnya</button>`;
                 
                 pageDiv.innerHTML = html;
@@ -293,12 +312,10 @@
             });
         }
 
-        // Mengaktifkan tombol 'Selanjutnya' ketika pengguna memilih jawaban
         function enableNextBtn(index) {
             document.getElementById(`btn-next-${index}`).disabled = false;
         }
 
-        // Transisi dari Intro ke Kuis
         function startQuiz() {
             document.getElementById('page-intro').classList.remove('active');
             document.getElementById('progress-container').style.display = 'block';
@@ -306,28 +323,22 @@
             showPage();
         }
 
-        // Logika menampilkan halaman berdasarkan currentStep
         function showPage() {
-            // Sembunyikan semua halaman kuis
             document.querySelectorAll('#quiz-pages .page').forEach(p => p.classList.remove('active'));
             
             if (currentStep < questions.length) {
-                // Tampilkan halaman pertanyaan saat ini
                 document.getElementById(`page-${currentStep}`).classList.add('active');
                 updateProgress();
             } else {
-                // Kuis selesai, hitung hasil
                 showResult();
             }
         }
 
-        // Memperbarui Progress Bar
         function updateProgress() {
             const percentage = (currentStep / questions.length) * 100;
             document.getElementById('progress').style.width = percentage + '%';
         }
 
-        // Pindah ke pertanyaan berikutnya
         function nextQuestion() {
             const selected = document.querySelector(`input[name="q${currentStep}"]:checked`);
             if (selected) {
@@ -337,37 +348,34 @@
             }
         }
 
-        // Menghitung dan menampilkan hasil di halaman akhir
         function showResult() {
             document.getElementById('progress-container').style.display = 'none';
             document.getElementById('page-result').classList.add('active');
             
             const totalScore = answers.reduce((a, b) => a + b, 0);
             
-            // Animasi penghitung angka (opsional agar interaktif)
             let scoreDisplay = document.getElementById('result-score');
             scoreDisplay.innerText = totalScore;
             
             const titleEl = document.getElementById('result-title');
             const descEl = document.getElementById('result-desc');
-            const resultCard = document.querySelector('.result-card');
             
-            if (totalScore <= 15) {
+            // Rentang skor disesuaikan untuk 30 soal (Min: 30, Max: 150)
+            if (totalScore <= 75) {
                 titleEl.style.color = '#2ECC71'; 
-                titleEl.innerText = "🌿 Tangki Empati Penuh (Risiko Rendah)";
-                descEl.innerHTML = "Wah, luar biasa! Kamu mengelola kesejahteraan emosionalmu dengan sangat baik. Terus pertahankan <em>support system</em> dan batasan sehat yang sudah kamu bangun. Kamu sudah siap dan akan terus menjadi ruang aman bagi anak-anak didikmu. Jangan lupa apresiasi dirimu sendiri hari ini!";
-            } else if (totalScore <= 28) {
+                titleEl.innerText = "🌿 Tangki Empati Terjaga (Risiko Kelelahan Rendah)";
+                descEl.innerHTML = "Luar biasa! Tingkat kepuasan kerjamu tampak lebih dominan dibanding kelelahan emosional. Pertahankan rutinitas <em>self-care</em> dan batasan sehat yang sudah kamu bangun. Anak-anak didikmu sangat beruntung memilikimu!";
+            } else if (totalScore <= 110) {
                 titleEl.style.color = '#F39C12'; 
-                titleEl.innerText = "🌤️ Lampu Kuning (Risiko Sedang)";
-                descEl.innerHTML = "Halo, terima kasih sudah berani jujur pada dirimu sendiri. Kamu mulai merasakan percikan <em>compassion fatigue</em>. Tuntutan mengajar perlahan mulai menggerus energimu. Ini adalah waktu yang tepat untuk mengatur ulang ritme istirahatmu sebelum berujung pada <em>burnout</em>. Ingat, kamu berhak beristirahat sejenak.";
+                titleEl.innerText = "🌤️ Lampu Kuning (Risiko Kelelahan Sedang)";
+                descEl.innerHTML = "Terima kasih sudah berani jujur. Kamu mungkin mulai merasakan beban dari tuntutan mengajar sehari-hari. Mulailah mengatur ulang ritme kerjamu dan luangkan waktu untuk dirimu sendiri sebelum kelelahan ini berujung pada <em>burnout</em>.";
             } else {
                 titleEl.style.color = '#E74C3C'; 
-                titleEl.innerText = "❤️ Tangki Kosong (Risiko Tinggi)";
-                descEl.innerHTML = "Peluk hangat untukmu. Alarm bahaya sedang berbunyi keras. Sangat wajar jika kamu merasa kehabisan napas saat kamu sudah memberikan terlalu banyak cinta dan tenaga untuk orang lain. Tolong prioritaskan dirimu sekarang. Ambil jeda yang kamu butuhkan, terapkan batasan yang ketat, dan pertimbangkan untuk berbicara dengan rekan tepercaya atau tenaga profesional.";
+                titleEl.innerText = "❤️ Tangki Kosong (Risiko Kelelahan Tinggi)";
+                descEl.innerHTML = "Peluk hangat untukmu. Sangat wajar jika kamu merasa sangat kelelahan saat kamu sudah memberikan terlalu banyak cinta dan tenaga untuk orang lain. Tolong prioritaskan dirimu sekarang. Ambil jeda, dan pertimbangkan untuk berbicara dengan rekan tepercaya atau tenaga profesional.";
             }
         }
 
-        // Jalankan fungsi pembuatan soal saat halaman dimuat
         renderQuestions();
     </script>
 </body>
